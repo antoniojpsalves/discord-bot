@@ -60,6 +60,6 @@ client.on(Events.InteractionCreate, async interaction => {
     await command.execute(interaction);
   } catch(e){
     console.error('Erro ao executar o comando');
-    await interaction.replay("Houve um erro ao executar esse comando");
+    await interaction.reply("Houve um erro ao executar esse comando");
   }
 })
