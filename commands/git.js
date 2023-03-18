@@ -45,7 +45,7 @@ module.exports = {
     .setDescription("Relembrar comandos do git que usamos no dia a dia"),
 
   async execute(interaction) {
-    await interaction.reply({embeds: [exempleEmbed]})
+    await interaction.reply({embeds: [exempleEmbed]});
   }
 }
 

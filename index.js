@@ -10,6 +10,38 @@ const client = new Client({intents: [GatewayIntentBits.Guilds]});
 
 client.commands = new Collection();
 
+
+const docsUrls = [
+  {
+    linguagem: 'Git',
+    link: "https://www.w3schools.com/git/default.asp"
+  },
+  {
+    linguagem: 'PHP',
+    link: "https://www.php.net/manual/pt_BR/index.php"
+  },
+  {
+    linguagem: 'Javascript',
+    link: "https://developer.mozilla.org/pt-BR/docs/Web/JavaScript"
+  },
+  {
+    linguagem: 'Jquery',
+    link: "https://api.jquery.com/"
+  },
+  {
+    linguagem: 'ReactJS',
+    link: "https://pt-br.reactjs.org/docs/getting-started.html"
+  },
+  {
+    linguagem: 'React Native',
+    link: "https://reactnative.dev/docs/getting-started"
+  },
+  {
+    linguagem: 'DiscordJS',
+    link: "https://discord.js.org/#/docs/discord.js/main/general/welcome"
+  },
+];
+
 // importação dos comandos nos arquivos
 
 const fs = require("node:fs");
@@ -44,6 +76,20 @@ client.login(TOKEN);
 //Listener de interações com o bot
 
 client.on(Events.InteractionCreate, async interaction => {
+
+  //checando primeiro o tipo de interação, caso seja o select
+  if(interaction.isStringSelectMenu()) {
+    const selected = interaction.values[0];
+
+    // console.log(docsUrls.filter(tech => tech.linguagem === selected));
+
+    //destructuring massa dms
+    const [{ linguagem, link }] = docsUrls.filter(tech => tech.linguagem === selected);
+
+    await interaction.reply(`Aqui está o link com a documentação da tech ${linguagem}: ${link}`);
+  }
+
+  
   //se a interação não vier de um input do chat return
   if(!interaction.isChatInputCommand()) return
     
@@ -58,7 +104,7 @@ client.on(Events.InteractionCreate, async interaction => {
   
   try {
     await command.execute(interaction);
-  } catch(e){
+  } catch(e) {
     console.error('Erro ao executar o comando');
     await interaction.reply("Houve um erro ao executar esse comando");
   }
