@@ -45,6 +45,11 @@ const row = new ActionRowBuilder()
           label: "Typescript",
           description: "Veja a documentação do Typescript",
           value: "Typescript"
+        },
+        {
+          label: "NodeJs",
+          description: "Veja a documentação do NodeJs",
+          value: "NodeJs"
         }
       )
   );

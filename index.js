@@ -44,6 +44,10 @@ const docsUrls = [
     linguagem: 'Typescript',
     link: "https://www.typescriptlang.org/pt/docs/"
   },
+  {
+    linguagem: 'NodeJs',
+    link: "https://nodejs.org/en/docs"
+  },
 ];
 
 // importação dos comandos nos arquivos
