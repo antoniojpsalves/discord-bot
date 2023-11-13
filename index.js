@@ -1,12 +1,12 @@
-const {Client, Events, GatewayIntentBits, Collection} = require('discord.js');
+const { Client, Events, GatewayIntentBits, Collection } = require('discord.js');
 
 //dotenv do js
 const dotenv = require('dotenv');
 dotenv.config();
 
-const {TOKEN, CLIENT_ID, GUILD_ID } = process.env;
+const { TOKEN, CLIENT_ID, GUILD_ID } = process.env;
 
-const client = new Client({intents: [GatewayIntentBits.Guilds]});
+const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.commands = new Collection();
 
@@ -40,6 +40,10 @@ const docsUrls = [
     linguagem: 'DiscordJS',
     link: "https://discord.js.org/#/docs/discord.js/main/general/welcome"
   },
+  {
+    linguagem: 'Typescript',
+    link: "https://www.typescriptlang.org/pt/docs/"
+  },
 ];
 
 // importação dos comandos nos arquivos
@@ -53,11 +57,11 @@ const commandsFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith(
 // console.log(commandsFiles)
 
 
-for(file of commandsFiles) {
+for (file of commandsFiles) {
   const filePath = path.join(commandsPath, file);
   const command = require(filePath);
 
-  if("data" in command && "execute" in command) {
+  if ("data" in command && "execute" in command) {
     client.commands.set(command.data.name, command);
   } else {
     console.error("Comando não encontrado");
@@ -78,7 +82,7 @@ client.login(TOKEN);
 client.on(Events.InteractionCreate, async interaction => {
 
   //checando primeiro o tipo de interação, caso seja o select
-  if(interaction.isStringSelectMenu()) {
+  if (interaction.isStringSelectMenu()) {
     const selected = interaction.values[0];
 
     // console.log(docsUrls.filter(tech => tech.linguagem === selected));
@@ -89,22 +93,22 @@ client.on(Events.InteractionCreate, async interaction => {
     await interaction.reply(`Aqui está o link com a documentação da tech ${linguagem}: ${link}`);
   }
 
-  
+
   //se a interação não vier de um input do chat return
-  if(!interaction.isChatInputCommand()) return
-    
+  if (!interaction.isChatInputCommand()) return
+
   // console.log(interaction)
 
   const command = interaction.client.commands.get(interaction.commandName);
 
-  if(!command) {
+  if (!command) {
     console.error("Comando não encontrado");
     return;
   }
-  
+
   try {
     await command.execute(interaction);
-  } catch(e) {
+  } catch (e) {
     console.error('Erro ao executar o comando');
     await interaction.reply("Houve um erro ao executar esse comando");
   }
